@@ -91,9 +91,9 @@ data_GO <- compareCluster(ENTREZID~group,
                           fun = "enrichGO",
                           OrgDb =  "org.Hs.eg.db",
                           ont = "BP",
-                          pAdjustMethod = "bonferroni", # P值校正方法,还可以是fdr
-                          pvalueCutoff = 0.05,#设定p值阈值
-                          qvalueCutoff = 0.05,#设定q值阈值
+                          pAdjustMethod = "bonferroni",
+                          pvalueCutoff = 0.05,
+                          qvalueCutoff = 0.05,
                           readable = T)
 data_GO_result <- data_GO@compareClusterResult
 
@@ -114,9 +114,9 @@ data_GO <- compareCluster(ENTREZID~group,
                           fun = "enrichGO",
                           OrgDb =  "org.Hs.eg.db",
                           ont = "BP",
-                          pAdjustMethod = "bonferroni", # P值校正方法,还可以是fdr
-                          pvalueCutoff = 0.05,#设定p值阈值
-                          qvalueCutoff = 0.05,#设定q值阈值
+                          pAdjustMethod = "bonferroni",
+                          pvalueCutoff = 0.05,
+                          qvalueCutoff = 0.05,
                           readable = T)
 data_GO_sim <- clusterProfiler::simplify(data_GO, cutoff =0.7,by = "p.adjust",select_fun = min)
 
