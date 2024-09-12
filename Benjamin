@@ -1,0 +1,28 @@
+library(Seurat)
+library(dplyr)
+
+Benjamin_sc <- readRDS(file = "data/analysis/basic/Ben_sc_filtered.RDS")
+table(Benjamin_sc$orig.ident)
+# AA2   AA4   AA7   AA8 C_PB1 C_PB2 C_PB3 C_SD1 C_SD2 C_SD3 
+#6430  4871  8320  5673  3323  5304  4966  6513  2304  6584 
+
+#添加Condtion，分组信息为AA和CTRL
+Benjamin_sc@meta.data <- Benjamin_sc@meta.data %>%
+  mutate(Condition = ifelse(grepl("^AA", orig.ident), "AA", 
+                            ifelse(grepl("^C_", orig.ident), "CTRL", NA)))
+table(Benjamin_sc$Condition)
+#   AA  CTRL 
+#25294 28994 
+
+#提取Control组信息
+Benjamin_CTRL <- subset(Benjamin_sc, subset = Condition == "CTRL")
+table(Benjamin_CTRL$Condition) #CTRL 28994
+
+#细胞类型信息，存储在CellType中
+table(Benjamin_CTRL$BroadClust) #
+Benjamin_CTRL$CellType = Benjamin_CTRL$BroadClust
+table(Benjamin_CTRL$CellType)
+# Bc    Fb    Kc    Le    Ma    Me    Mu    My    Tc    Ve 
+# 52  4787 10738   308   935   514  3140  2504  3093  2923 
+
+saveRDS(Benjamin_CTRL,file = "first/benjamin_CTRL_scRNA.RDS")
